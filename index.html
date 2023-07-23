@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="renderer" content="webkit">
+  <meta name="SiteName" content="中国教师资格网门户网站">
+  <meta name="SiteDomain" content="jszg.moe.gov.cn">
+  <meta name="SiteIDCode" content="bm05000016">
+  <meta name="filetype" content="0">
+  <meta name="publishedtype" content="1">
+  <meta name="pagetype" content="2">
+  <meta name="catalogs" content="index">
+  <meta name="uctk" content="enabled">
+  <meta name="csrf-token" content="">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>教师资格证书</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/common/reset.css" rel="stylesheet">
+  <link href="./css/common/base.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./css/VerificationResults.css" />
+
+
+  <script src="../js/ajax-1-1.js"></script>
+  <script src="../statics/scripts/jquery.min.js" type="text/javascript"></script>
+  <script src="../statics/scripts/jquery.lgyslide.js" type="text/javascript"></script>
+  <script src="../js/tool/md5.min.js" type="text/javascript"></script>
+
+  <script type="text/javascript" src="./js/qrcode.js"></script>
+</head>
+
+<body>
+
+
+  <div class="certificateVerification-content">
+    <div class="bg container">
+
+      <div class="">
+        <div class="VerificationResults-Contant fl ">
+          <div class="VerificationResults-Contant-a fl">
+            <div class="TeacherCertificate fl" id="VerificationResults-Contant" style="height: 600px">
+              <div class="Verification-results ">
+                <h3 style="margin-top: 45px"><b>中国教师资格网教师资格证书查询结果</b></h3>
+                <div class="Verification-results-Time" id="divtime">查询日期：2023年07月22日</div>
+                <div class="Verification-results-info col-sm-12 clearfix">
+                  <ul class="Verification-results-left fl clearfix  col-sm-8 " id="message_list_ls">
+                    <li>
+                      姓名：
+                      <span>
+                        <b>张衡</b>
+                      </span>
+                    </li>
+                    <li>
+                      性别：
+                      <span>
+                        <b>男</b>
+                      </span>
+                    </li>
+                    <li>
+                      出生年月日：
+                      <span>
+                        <b>1992年11月04日</b>
+                      </span>
+                    </li>
+                    <li>
+                      民族：
+                      <span>
+                        <b>汉族</b>
+                      </span>
+                    </li>
+                    <li>
+                      身份证号码：
+                      <span>
+                        <b>410511199211040613</b>
+                      </span>
+                    </li>
+                    <li>
+                      资格证类型：
+                      <span>
+                        <b>高级中学教师资格</b>
+                      </span>
+                    </li>
+                    <li>
+                      任教学科：
+                      <span>
+                        <b>化学</b>
+                      </span>
+                    </li>
+                    <li>
+                      教师资格证书号码：
+                      <span>
+                        <b>20194550042001227</b>
+                      </span>
+                    </li>
+
+                    <li>
+                      认定机构：
+                      <span>
+                        <b>桂林市教育局</b>
+                      </span>
+                    </li>
+                    <li>
+                      证书签发日期：
+                      <span>
+                        <b>2019年07月08日</b>
+                      </span>
+                    </li>
+                  </ul>
+                  <br>
+                  <br>
+                  <div class="Verification-results-right">
+                    <img src="./image/证件照白底.jpg " id="divphoto" alt="未显示">
+                  </div>
+                </div>
+
+                <div class="Query-Website fl clearfix">
+                  <div id="qrcode" style="width:100px; height:100px;margin-top: -60px;"
+                    title="https://sso1.jszg.edu.cn/sso/website/certificateDetail.html?checkcode=C9ouU8D9Mc&sign=182e6f2b266e7bb16d115eaa39ce3090b4867b4a">
+                    <img alt="Scan me!" src="./image/下载.png"
+                      style="display: block;margin-left: 10px; width: 100px;height: auto;">
+                  </div>
+                  <div style="float: left;height:100px; margin-top:-30px;margin-left: 150px;" class="clearfix">
+                    扫描可获取当前证书信息，有效期30天。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <br>
+
+</body>
+
+<script language="JavaScript">
+
+  $(document).ready(function () {
+
+    var date = new Date();
+    Y = date.getFullYear();
+    M = date.getMonth() + 1;
+    D = date.getDate();
+    var stime = "查询日期：" + Y + "年" + M + "月" + D + "日";
+    $('#divtime').html(stime);
+
+    var item = JSON.parse(localStorage.getItem("certificatedetail"))
+    var checkcode = sessionStorage.getItem("code:" + item.sensCertNo);
+    if (checkcode == null) {
+      checkcode = saveResult(item, '', '');
+      // if(checkcode.length > 0) {
+      sessionStorage.setItem("code:" + item.sensCertNo, checkcode);
+      // }
+    } else {
+      var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 100,
+        height: 100
+      });
+
+      host = getDomain_dc() + "sso";
+      debugger;
+      if (checkcode.indexOf(",") > 0) {
+        debugger;
+        var yzm = checkcode.substr(0, checkcode.indexOf(","));
+        var yzmSign = checkcode.substr(checkcode.indexOf(",") + 1);
+        var qrurl = host + "/website/certificateDetail.html?checkcode=" + yzm + "&sign=" + yzmSign;
+        qrcode.makeCode(qrurl);
+      }
+    }
+
+    showData(item, checkcode, '2');
+
+
+
+  });
+
+
+  function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] == variable) { return pair[1]; }
+    }
+    return (false);
+  }
+
+  function showData(item, yanzhengma, thetype) {
+    //先清空
+    var content = "";
+    $('#message_list_ls').html("");
+
+    //获取照片
+    // var imagestr=this.buildImageQm(item.sensCertNo);
+
+    var imagestr = sessionStorage.getItem("image:" + item.sensCertNo);
+    if (imagestr == null) {
+      imagestr = this.buildImageQm(item.sensCertNo);
+      sessionStorage.setItem("image:" + item.sensCertNo, imagestr);
+    }
+
+    document.getElementById('divphoto').src = imagestr;
+
+    var sex = item.gender;
+    if (sex == 1)
+      sex = '男';
+    else
+      sex = '女';
+    var birthday = item.birthday;
+    if (birthday == null)
+      birthday = "";
+    if (birthday.length >= 10) {
+      birthday = birthday.substring(0, 4) + "年" + birthday.substring(5, 7) + "月" + birthday.substring(8, 10) + "日";
+    }
+    var certAssign = item.certAssign;
+    if (certAssign == null)
+      certAssign = "";
+    if (certAssign.length >= 10) {
+      certAssign = certAssign.substring(0, 4) + "年" + certAssign.substring(5, 7) + "月" + certAssign.substring(8, 10) + "日";
+    }
+    var dom = "<li>姓名：<span><b>" + item.name + "</b></span></li>\n\t\t\t\t\t\t\t<li>性别：<span><b>" + sex + "</b></span></li>\n\t\t\t\t\t\t\t<li>出生年月：<span><b>" + birthday + "</b></span></li>\n\t\t\t\t\t\t\t<li>民族：<span><b>" + item.nationName + "</b></span></li>\n\t\t\t\t\t\t\t<li>身份证号码：<span><b>" + item.idNum + "</b></span></li>\n\t\t\t\t\t\t\t<li>资格种类：<span><b>" + item.certTypeName + "</b></span></li>\n\t\t\t\t\t\t\t<li>任教学科：<span><b>" + item.subjectName + "</b></span></li>\n\t\t\t\t\t\t\t<li>教师资格证书号码：<span><b>" + item.sensCertNo + "</b></span></li>\n\t\t\t\t\t\t\t<li>认定机构：<span><b>" + item.orgName + "</b></span></li>\n\t\t\t\t\t\t\t<li>证书签发日期：<span><b>" + certAssign + "</b></span></li>";
+    content += dom;
+    $('#message_list_ls').html(content);
+
+    // saveResult(item,yanzhengma,thetype);
+
+  }
+
+  //保存验证结果
+  function saveResult(item, yanzhengma, thetype) {
+
+
+
+    $get("rest/personal/center/teacher/siteSearchcert/v2/" + item.sensCertNo, { t: Date.parse(new Date()) }, {
+      success: function (yzmSign) {
+        console.log(yzmSign.data);
+        checkcode = yzmSign.data;
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+          width: 100,
+          height: 100
+        });
+
+        host = getDomain_dc() + "sso";
+        debugger;
+        if (checkcode.indexOf(",") > 0) {
+          debugger;
+          var yzm = checkcode.substr(0, checkcode.indexOf(","));
+          var yzmSign = checkcode.substr(checkcode.indexOf(",") + 1);
+          var qrurl = host + "/website/certificateDetail.html?checkcode=" + yzm + "&sign=" + yzmSign;
+          qrcode.makeCode(qrurl);
+        }
+
+        // return yzmSign.data;
+      },
+      error: function error(result) {
+        alert('验证码二维码生成异常！')
+        return "";
+      }
+    });
+
+
+    // $get("rest/personal/center/teacher/siteSearchcert/"+item.sensCertNo+"/"+yanzhengma, {t: Date.parse(new Date())}, {
+    // 	success: function (arg) {
+    // 		console.log(arg);
+    //
+    // 	},
+    // 	error: function error(result) {
+    // 		// alert('数据获取错误')
+    // 	}
+    // });
+
+  }
+  function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+      pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+  }
+
+  function buildImageQm(carid) {
+    //return getDomain_dc() + "/sso/rest/system/view/doc/certimage/ewm/"+checkcode+"?&t=" + new Date();
+    return getDomain_dc() + "rest/system/view/doc/certimage/" + carid + "?Authorization=" + localStorage.accessToken + "&channel=" + _channel_id + "&t=" + new Date().getTime();
+  }
+
+  function f_checkcode(checkcode) {
+    if (checkcode == null || checkcode.length != 10) {
+      alert("二维码地址不正确");
+      return;
+    }
+
+  }
+
+
+</script>
+
+<style>
+  @media screen and (min-width:1200px) {}
+
+  /*教师资格证书查询结果*/
+  .VerificationResults-Contant {
+    width: 800px;
+    height: 760px;
+    background: #ffd388;
+    margin-top: 20px;
+    margin-left: 140px;
+  }
+
+  .VerificationResults-Contant-a {
+    width: 764px;
+    height: 724px;
+    position: relative;
+    top: 20px;
+    margin: 18px;
+    background: #ffedcf;
+    background: url("./image/背景.png")no-repeat;
+  }
+
+  .Verification-results {
+    width: 712px;
+    height: 670px;
+    position: relative;
+    top: 18px;
+    border: 2px solid #f3c36f;
+    /*margin: 0 26px 0 26px;*/
+    margin: 26px;
+  }
+
+  .Verification-results>h3 {
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .Verification-results-Time {
+    text-align: center;
+  }
+
+  .Verification-results-left li {
+    margin-bottom: 20px;
+    font-size: 16px;
+    list-style: none;
+    text-indent: 0px;
+  }
+
+  .Verification-results-info {
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .Verification-results-right {
+    position: absolute;
+    right: 50px;
+    top: 0;
+  }
+
+  .Verification-results-right>img {
+    width: 150px;
+
+  }
+
+  .Query-Website {
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+</style>
+
+
+</html>
